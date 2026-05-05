@@ -1,0 +1,11 @@
+{
+  "name": "fetch-throttled",
+  "description": "Throttle a fetch by a given number of milliseconds",
+  "author": {
+    "name": "hh lohmann",
+    "email": "hh.lohmann@gmail.com"
+  },
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js"
+}
