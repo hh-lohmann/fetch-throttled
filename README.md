@@ -4,7 +4,7 @@
 
 Throttle a fetch by a given number of milliseconds.
 
-Very helpful to imagine the look and feel of an app without a developer's high end connectitvity. DevTools let you simulate slow networks, this maximum simple helper here lets you control testing slow downs from within your code.
+Very helpful to imagine the look and feel of an app without a developer's high end connectitvity. DevTools let you simulate slow networks, this maximum simple helper here lets you define slow-downs from within testing or demo scripts.
 
 ## Installation
 
@@ -78,7 +78,7 @@ SyntaxErrors on wrong parameters. Other exceptions should be [those of normal "f
       * NB RegEx: `.replace( /\d/g, '' ).replaceAll( '.', '' )` instead of `location.hostname.replace( /[\d\.]/g, '' )` to avoid `[]` which may mislead Markdown parsers to read it as link syntax
   * Unfortunately GitHub repo view displays "<script>" tags and their contents as literal content (for security), so the JavaScript here has to be pressed into an "onclick"
 -->
-See <a arial-description="Release vs. Dev switch = GitHub Pages vs. local file" href="https://hh-lohmann.github.io/fetch-throttled/demo.html" onclick="if( location.hostname.replace( /\d/g, '' ).replaceAll( '.', '' ) === '' || location.hostname === 'localhost' ){ this.href='./demo.html'; alert( 'Dev environment detected - switching to local version' ); }">demo.html</a>
+See <a aria-description="Release vs. Dev switch = GitHub Pages vs. local file" href="https://hh-lohmann.github.io/fetch-throttled/demo.html" onclick="if( location.hostname.replace( /\d/g, '' ).replaceAll( '.', '' ) === '' || location.hostname === 'localhost' ){ this.href='./demo.html'; alert( 'Dev environment detected - switching to local version' ); }">demo.html</a>
 
 
 ## References
