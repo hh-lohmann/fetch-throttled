@@ -29,15 +29,15 @@ Pick for your preferred package manager:
 ## Usage
 
 ```js
-  import { fetch_throttled } from fetch-throttled
+  import { fetchThrottled } from fetch-throttled
 
   // throttle fetch by 2 seconds
-  fetch_throttled( 'https://example.com', 2000 )
+  fetchThrottled( 'https://example.com', 2000 )
   .then( res => ... )
   .catch( err => console.error( err ) )
 
     // throttle fetch with options by 2 seconds
-  fetch_throttled( 'https://example.com', { mode: 'no-cors' }, 2000 )
+  fetchThrottled( 'https://example.com', { mode: 'no-cors' }, 2000 )
   .then( res => ... )
   .catch( err => console.error( err ) )
 ```
@@ -45,7 +45,7 @@ Pick for your preferred package manager:
 ## Syntax
 
 ```js
-  fetch_throttled( ...fetch args..., delay )
+  fetchThrottled( ...fetch args..., delay )
 ```
 
 **Parameters**

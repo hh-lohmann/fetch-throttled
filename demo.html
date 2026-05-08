@@ -4,12 +4,41 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Demo fetch-throttled</title>
-  <script type="module" src="./demo.js"></script>
   <style>
     body {
       font-family: Arial, Helvetica, sans-serif;
       margin: auto;
       max-width: 60em;
+      padding: 0 1em;
+    }
+    .output {
+       background-color: white;
+       border: none;
+       font-size: 1em;
+    }
+    div {
+      line-height: 2;
+      margin-top: 1em;
+    }
+    button {
+      font-size: 1.5em;
+    }
+    input {
+      line-height: 1.5;
+      display: block;
+      font-size: 1.5em;
+    }
+    input#delay {
+      text-align: right;
+      width: 4em;
+    }
+    input#url {
+      width: 100%;
+    }
+    textarea {
+      display: block;
+      height: 20em;
+      width: 100%;
     }
   </style>
 </head>
@@ -17,6 +46,71 @@
   <h1>
     Demo: fetch-throttled
   </h1>
-    See console  
+  <div>
+    URL to fetch from <input id="url" type="url" value="https://api.github.com/repos/facebook/react/commits?per_page=1">
+  </div>
+  <div>
+    Delay by ms<input id="delay" type="number" value="2000">
+  </div>
+  <div>
+    <button id="run">
+      Run fetchThrottled
+    </button>
+  </div>
+  <div>
+    Elapsed ms (remember that timing in JavaScript may be unexact) <input class="output" disabled id="ms" onchange="console.log('BUGGA')" value="0">
+  </div>
+  <div>
+    Result <textarea class="output" disabled id="result">...</textarea>
+  </div>
 </body>
+<script type="module">
+  import { fetchThrottled } from './index.js';
+  const adjust_button_text = function(){
+    elem_button.innerText = `Run "fetchThrottled( ${get_args().join(', ')} )"`;
+  }
+  const elapsed_time_counter = {
+    running_ids: [],
+    start(){
+      let step=10;
+      let ms_display=document.getElementById('ms');
+      ms_display.value = 0;
+      this.running_ids.push(setInterval(()=>ms_display.value=(parseInt(ms_display.value)+step),step));
+    },
+    stop(){
+      this.running_ids.forEach(value=>clearInterval(value));
+    }
+  }
+  const elem_button = document.getElementById('run');
+  const elem_delay = document.getElementById('delay');
+  const elem_result = document.getElementById('result');
+  const elem_url = document.getElementById('url');
+  const get_args = function(quote_url=true){
+    let my_args = [];
+    if(elem_url.value){
+      my_args.push(`${elem_url.value}`);
+      if(quote_url)my_args[0]=`'${my_args[0]}'`;
+    }
+    if(elem_delay.value) my_args.push(parseInt(elem_delay.value));  
+    return my_args;
+  }
+  const run = function(){
+    elem_result.value = '...';
+    elapsed_time_counter.start();  
+    fetchThrottled( ...get_args(false) )
+    .then( res => res.text().then( res => elem_result.value = res + '\nSee possible details in console' )
+    )
+    .catch( err => elem_result.value = err + '\nSee possible details in console' )
+    .finally(
+      () => elapsed_time_counter.stop()
+    )
+  }
+  document.querySelectorAll( 'input' ).forEach(value=>{
+    if(value.id==='url'||value.id==='delay'){
+      value.addEventListener('keyup',()=>{adjust_button_text()})
+    }
+  });
+  elem_button.addEventListener('click',()=>run());
+  adjust_button_text();
+</script>
 </html>
